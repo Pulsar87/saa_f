@@ -1,5 +1,4 @@
 // import 'package:cool_alert/cool_alert.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:saa_f/core/constant/strings-const.dart';
 import 'package:saa_f/core/themes/text_style.dart';
@@ -10,6 +9,61 @@ import '../../../../core/constant/app_media_query.dart';
 import '../../../../core/router/animation_route.dart';
 import '../../../Home/presntation/layout/home_layout.dart';
 import '../../domain/bloc/auth_bloc.dart';
+
+void showSuccessDialog({required BuildContext context, required String text, String title = '', void Function()? thenAction}) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.check_circle, color: Colors.green, size: 50),
+            SizedBox(height: 16),
+            if (title.isNotEmpty)
+              Text(title, style: normalTextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            if (title.isNotEmpty)
+              SizedBox(height: 8),
+            Text(text, style: normalTextStyle(fontSize: 20), textAlign: TextAlign.center),
+          ],
+        ),
+      );
+    },
+  ).then((value) => thenAction?.call());
+  
+  Future.delayed(Duration(seconds: 2), () {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+      thenAction?.call();
+    }
+  });
+}
+
+void showErrorDialog({required BuildContext context, required String text, String title = ''}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error, color: Colors.red, size: 50),
+            SizedBox(height: 16),
+            if (title.isNotEmpty)
+              Text(title, style: normalTextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            if (title.isNotEmpty)
+              SizedBox(height: 8),
+            Text(text, style: normalTextStyle(fontSize: 20), textAlign: TextAlign.center),
+          ],
+        ),
+      );
+    },
+  );
+}
 
 void loginDashboardSuccessMethod(
     LoginSuccessState state, BuildContext context) {
@@ -93,27 +147,21 @@ void loginSuccessMethod(LoginSuccessState state, BuildContext context) {
 
   // });
 
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showSuccessDialog(
     context: context,
-    type: CoolAlertType.success,
     title: '',
-    textTextStyle: normalTextStyle(fontSize: 20),
     text: StringConst.loginSuccess,
-    autoCloseDuration: const Duration(seconds: 2),
-  ).then((value) {
-    Navigator.of(context).pushReplacement(MyAnimatedRoute(page: HomeLayout()));  });
+    thenAction: () {
+      Navigator.of(context).pushReplacement(MyAnimatedRoute(page: HomeLayout()));
+    }
+  );
 }
 
 void loginErrorCoolAlert(BuildContext context, LoginErrorState state) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showErrorDialog(
     context: context,
-    type: CoolAlertType.error,
     title: StringConst.sorry,
     text: state.error,
-    textTextStyle: normalTextStyle(fontSize: 20),
-    loopAnimation: false,
   );
 }
 
@@ -162,51 +210,36 @@ void signupSuccessMethod(SinupSuccessState state, BuildContext context) {
 
   // });
 
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showSuccessDialog(
     context: context,
-    type: CoolAlertType.success,
     title: '',
-    textTextStyle: normalTextStyle(fontSize: 20),
     text: StringConst.signupSuccess,
-    autoCloseDuration: const Duration(seconds: 2),
-  ).then((value) {
-    Navigator.of(context).pushReplacement(MyAnimatedRoute(page: HomeLayout()));
-  });
+    thenAction: () {
+      Navigator.of(context).pushReplacement(MyAnimatedRoute(page: HomeLayout()));
+    }
+  );
 }
 
 void signupErrorCoolAlert(BuildContext context, SinupErrorState state) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showErrorDialog(
     context: context,
-    type: CoolAlertType.error,
     title: StringConst.sorry,
     text: state.error,
-    textTextStyle: normalTextStyle(fontSize: 20),
-    loopAnimation: false,
   );
 }
 
 void sendEmailErrorCoolAlert(BuildContext context, SendEmailErrorState state) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showErrorDialog(
     context: context,
-    type: CoolAlertType.error,
     title: StringConst.sorry,
     text: state.error,
-    textTextStyle: normalTextStyle(fontSize: 20),
-    loopAnimation: false,
   );
 }
 
 void authErrorCoolAlert(BuildContext context) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showErrorDialog(
     context: context,
-    type: CoolAlertType.error,
     title: StringConst.sorry,
     text: StringConst.somethingWrong,
-    textTextStyle: normalTextStyle(fontSize: 15),
-    loopAnimation: false,
   );
 }

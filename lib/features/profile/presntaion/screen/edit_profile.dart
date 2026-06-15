@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saa_f/core/components/app-text-field.dart';
@@ -27,32 +26,18 @@ class EditProfileScreen extends StatelessWidget {
               print("Edit profile state $state");
               if (state is ProfileEditSuccessState) {
                 appCoolAlertMethod(
-                    type: CoolAlertType.success,
                     text: "تم تعديل الملف الشخصي",
                     context: context,
                     thenAction: () {
                       Navigator.of(context).pop();
-    //                   Future.delayed(Duration(seconds:5), () {
-    //                     print("baack");
-    //
-    //                   }
-    // // }
-    // //                   }
-    // //                     .then((value) {
-    // //                 {
-    // //                   print("update profile");
-    // //                 }
-    // //               }
-    // //
-    //               );
-                });
+                    }
+                );
           }
               else if (state is ProfileEditErrorState) {
                 print("ProfileEditErrorState");
-                appCoolAlertMethod(
-                    type: CoolAlertType.error,
+                appErrorAlertMethod(
                     title: "عذراً",
-                    text: "حصل خطأ أثناء تعديل البيانات\Nالرجاء المحاولة لاحقا",
+                    text: "حصل خطأ أثناء تعديل البيانات\nالرجاء المحاولة لاحقا",
                     context: context);
               }
         },
@@ -90,6 +75,4 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
           );
-        })));
-  }
-}
+        })));\n  }\n}
