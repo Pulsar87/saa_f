@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/network/local/shared_prefrences_helper.dart';
@@ -11,33 +10,78 @@ import '../../../../core/themes/text_style.dart';
 import '../../domain/bloc/auth_bloc.dart';
 import '../screens/reset_password_verification_code.dart';
 
-void sndEmailSuccessMethod(SendEmailSuccessState state, BuildContext context) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+void showSuccessDialog({required BuildContext context, required String text, String title = '', void Function()? thenAction}) {
+  showDialog(
     context: context,
-    type: CoolAlertType.success,
-    title: '',
-    textTextStyle: normalTextStyle(fontSize: 20),
-    text: StringConst.sendCodeSuccess,
-    autoCloseDuration: const Duration(seconds: 2),
-  ).then((value) {
-    Navigator.of(context).pushReplacement(MyAnimatedRoute(page: ResetPasswordVerificationCodeScreen()));
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.check_circle, color: Colors.green, size: 50),
+            SizedBox(height: 16),
+            if (title.isNotEmpty)
+              Text(title, style: normalTextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            if (title.isNotEmpty)
+              SizedBox(height: 8),
+            Text(text, style: normalTextStyle(fontSize: 20), textAlign: TextAlign.center),
+          ],
+        ),
+      );
+    },
+  ).then((value) => thenAction?.call());
+  
+  Future.delayed(Duration(seconds: 2), () {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+      thenAction?.call();
+    }
   });
+}
 
-  // context.pushReplacement(verificationCodeRoutePath);
-  // Navigator.of(context).pushReplacement(MyAnimatedRoute(page: Vere()));
+void showErrorDialog({required BuildContext context, required String text, String title = ''}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error, color: Colors.red, size: 50),
+            SizedBox(height: 16),
+            if (title.isNotEmpty)
+              Text(title, style: normalTextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            if (title.isNotEmpty)
+              SizedBox(height: 8),
+            Text(text, style: normalTextStyle(fontSize: 20), textAlign: TextAlign.center),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void sndEmailSuccessMethod(SendEmailSuccessState state, BuildContext context) {
+  showSuccessDialog(
+    context: context,
+    title: '',
+    text: StringConst.sendCodeSuccess,
+    thenAction: () {
+      Navigator.of(context).pushReplacement(MyAnimatedRoute(page: ResetPasswordVerificationCodeScreen()));
+    }
+  );
 }
 
 
 void sndEmailErrorCoolAlert(BuildContext context, SendEmailErrorState state) {
-  CoolAlert.show(
-    width: displayWidth(context)/4,
+  showErrorDialog(
     context: context,
-    type: CoolAlertType.error,
     title: StringConst.sorry,
     text: state.error,
-    textTextStyle: normalTextStyle(fontSize: 20),
-    loopAnimation: false,
   );
 }
 
@@ -46,14 +90,9 @@ void sndEmailErrorCoolAlert(BuildContext context, SendEmailErrorState state) {
 
 
 void checkCodeErrorMethod(BuildContext context, CheckCodeErrorState state) {
-  CoolAlert.show(
-    width: displayWidth(context)/4,
+  showErrorDialog(
     context: context,
-    type: CoolAlertType.error,
     title: StringConst.sorry,
     text: state.error,
-    textTextStyle: normalTextStyle(fontSize: 20),
-    loopAnimation: false,
   );
 }
-
