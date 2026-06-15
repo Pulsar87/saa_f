@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../core/constant/app_media_query.dart';
@@ -9,34 +8,42 @@ import '../../Home/presntation/layout/home_layout.dart';
 import '../domain/bloc/join_bloc.dart';
 
 void joinErrorCoolAlert(BuildContext context, JoinRequestErrorState state) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showDialog(
     context: context,
-    type: CoolAlertType.error,
-    title: StringConst.sorry,
-    text: state.error,
-    textTextStyle: normalTextStyle(fontSize: 20),
-    loopAnimation: false,
-    // autoCloseDuration: const Duration(seconds: 2),
-  ).then((value) {
-    Navigator.of(context).pushReplacement(MyAnimatedRoute(page:  HomeLayout()));
-    // Navigator.of(context).pushReplacement(MyAnimatedRoute(page: ResetPasswordVerificationCodeScreen()));
-  });
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(StringConst.sorry, style: normalTextStyle(fontSize: 20)),
+        content: Text(state.error, style: normalTextStyle(fontSize: 16)),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MyAnimatedRoute(page: HomeLayout()));
+            },
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 
 void joinSuccessMethod(BuildContext context, JoinRequestSuccessState state, ) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showDialog(
     context: context,
-    type: CoolAlertType.success,
-    title: '',
-    textTextStyle: normalTextStyle(fontSize: 20),
-    text: StringConst.joinRequestSendSuccess,
-    // autoCloseDuration: const Duration(seconds: 2),
-  ).then((value) {
-    Navigator.of(context).pushReplacement(MyAnimatedRoute(page:  HomeLayout()));
-    // Navigator.of(context).pushReplacement(MyAnimatedRoute(page: ResetPasswordVerificationCodeScreen()));
-  });
-
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('', style: normalTextStyle(fontSize: 20)),
+        content: Text(StringConst.joinRequestSendSuccess, style: normalTextStyle(fontSize: 16)),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MyAnimatedRoute(page: HomeLayout()));
+            },
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }

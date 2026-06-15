@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saa_f/core/components/screen_componant/loading_screen.dart';
@@ -37,28 +36,46 @@ class DeleteActivityDialog extends StatelessWidget {
         create: (BuildContext context) => activityBloc,
         child: BlocListener<ActivityBloc, ActivityState>(listener: (context, state) {
           if (state is ConfirmActivityErrorState || state is DeleteActivityErrorState) {
-            CoolAlert.show(
-              width: displayWidth(context) / 4,
+            showDialog(
               context: context,
-              type: CoolAlertType.error,
-              title: '',
-              textTextStyle: normalTextStyle(fontSize: 20),
-              text: StringConst.somethingWrong,
-              autoCloseDuration: const Duration(seconds: 2),
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('', style: normalTextStyle(fontSize: 20)),
+                  content: Text(StringConst.somethingWrong, style: normalTextStyle(fontSize: 16)),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
             ).then((value) {
               Navigator.pop(context);
               Navigator.pop(context);
             });
           }  else if (state is DeleteActivitySuccessState )
           {
-            CoolAlert.show(
-              width: displayWidth(context) / 4,
+            showDialog(
               context: context,
-              type: CoolAlertType.success,
-              title: 'تم',
-              textTextStyle: normalTextStyle(fontSize: 20),
-              text: "تم حذف النشاط",
-              autoCloseDuration: const Duration(seconds: 2),
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('تم', style: normalTextStyle(fontSize: 20)),
+                  content: Text("تم حذف النشاط", style: normalTextStyle(fontSize: 16)),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
             ).then((value) {
               Navigator.pop(context);
               Navigator.pop(context);
