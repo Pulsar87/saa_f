@@ -194,7 +194,6 @@
 // }
 
 
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 
 import 'core/constant/app_media_query.dart';
@@ -210,15 +209,27 @@ class Test extends StatelessWidget {
         child: IconButton(icon: Icon(Icons.add),
         onPressed: (){
 
-          CoolAlert.show(
-            showCancelBtn: true,
-            width: displayWidth(context) / 4,
+          showDialog(
             context: context,
-            type: CoolAlertType.loading,
-            title: '',
-            textTextStyle: normalTextStyle(fontSize: 20),
-            text: "text",
-            // autoCloseDuration: const Duration(seconds: 4),
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('', style: normalTextStyle(fontSize: 20)),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text("text", style: normalTextStyle(fontSize: 20)),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Cancel'),
+                  ),
+                ],
+              );
+            },
           ).then((value) {
             // Navigator.of(context).pushReplacement(MyAnimatedRoute(page: DrawerLayout()));
           });

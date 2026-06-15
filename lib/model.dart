@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'core/constant/app_media_query.dart';
 import 'core/constant/strings-const.dart';
@@ -36,27 +36,39 @@ class RequestModel {
 
 
 void requestErrorCoolAlert(BuildContext context) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showDialog(
     context: context,
-    type: CoolAlertType.error,
-    title: StringConst.sorry,
-    text: StringConst.somethingWrong,
-    textTextStyle: normalTextStyle(fontSize: 15),
-    loopAnimation: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(StringConst.sorry, style: normalTextStyle(fontSize: 20)),
+        content: Text(StringConst.somethingWrong, style: normalTextStyle(fontSize: 15)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
   );
 }
 
 
 void requestSuccessMethod(String text, BuildContext context) {
-  CoolAlert.show(
-    width: displayWidth(context) / 4,
+  showDialog(
     context: context,
-    type: CoolAlertType.success,
-    title: '',
-    textTextStyle: normalTextStyle(fontSize: 20),
-    text: text,
-    autoCloseDuration: const Duration(seconds: 2),
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('', style: normalTextStyle(fontSize: 20)),
+        content: Text(text, style: normalTextStyle(fontSize: 20)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
   ).then((value) {
     // Navigator.of(context).pushReplacement(MyAnimatedRoute(page: ResetPasswordVerificationCodeScreen()));
   });
