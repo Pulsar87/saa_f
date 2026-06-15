@@ -84,7 +84,6 @@ import 'package:flutter/material.dart';
 import 'package:circular_bottom_navigation/circular_bottom_navigation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saa_f/core/constant/colors/light-colors.dart';
 import 'package:saa_f/features/JoinRequest/presentation/screen/join-screen.dart';
 import 'package:saa_f/features/auth/presentation/screens/login.dart';

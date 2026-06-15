@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saa_f/core/constant/assets-const.dart';
 import 'package:saa_f/core/constant/colors/light-colors.dart';
 import 'package:saa_f/core/themes/text_style.dart';

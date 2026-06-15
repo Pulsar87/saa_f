@@ -87,7 +87,7 @@ final ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.normal,
     ),
   ),
-  tabBarTheme: const TabBarThemeData(
+  tabBarTheme: TabBarThemeData(
     labelColor: primaryColor,
     labelStyle: TextStyle(
       fontWeight: FontWeight.bold,
