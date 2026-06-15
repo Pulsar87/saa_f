@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/constant/responsive/MediaQuery.dart';
 import '../../../../../core/themes/text_style.dart';
 import '../../../data/repository/publish_repo.dart';
@@ -56,7 +55,7 @@ class VideoPostLike extends StatelessWidget {
                               .add(VideoLikeEvent(videoID: id));
                         },
                           icon: Icon(
-                            isLike? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                            isLike? Icons.favorite : Icons.favorite_border,
                             size: 30,),
                         ),
                       ],

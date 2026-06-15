@@ -82,7 +82,7 @@ final ThemeData darkTheme = ThemeData(
         fontWeight: FontWeight.normal,
       ),
     ),
-    tabBarTheme: const TabBarThemeData(
+    tabBarTheme: TabBarThemeData(
         indicatorSize: TabBarIndicatorSize.tab,
         labelColor: darkThemeLightColor,
         labelStyle: TextStyle(
@@ -90,7 +90,7 @@ final ThemeData darkTheme = ThemeData(
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
-        unselectedLabelColor:lightGrey,
+        unselectedLabelColor: lightGrey,
         dividerColor: darkThemeLightColor
     ),
     inputDecorationTheme: InputDecorationTheme(

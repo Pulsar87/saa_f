@@ -44,7 +44,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saa_f/core/themes/text_style.dart';
 
 import '../../../../../core/constant/responsive/MediaQuery.dart';
@@ -99,7 +98,7 @@ class ImagePostLike extends StatelessWidget {
                               .add(ImageLikeEvent(imageID: id));
                         },
                           icon: Icon(
-                            isLike? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                            isLike? Icons.favorite : Icons.favorite_border,
                             size: 30,),
                         ),
                       ],

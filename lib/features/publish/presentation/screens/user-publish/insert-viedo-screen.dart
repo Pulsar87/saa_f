@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saa_f/core/components/screen_componant/loading_screen.dart';
 import 'package:saa_f/core/themes/text_style.dart';
 import '../../../../../core/components/material-button-componat.dart';
@@ -69,7 +68,7 @@ class InsertVideoScreen extends StatelessWidget {
                                       verticalPadding: 8,
                                       labelText: "رابط الفيديو",
                                       hintText: "أدخل رابط يوتيوب",
-                                      suffixIcon: Icon(FontAwesomeIcons.tv),
+                                      suffixIcon: Icon(Icons.tv),
                                       controller: videoUrlController,
                                       validate: (value) {
                                         if (value!.isEmpty) {
