@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saa_f/core/components/app-text-field.dart';
@@ -50,30 +49,36 @@ class EditActivityScreen extends StatelessWidget {
           //
           print(state);
           if(state is EditActivityLoadingState) {
-            CoolAlert.show(
-              width: displayWidth(context) / 4,
+            showDialog(
               context: context,
-              type: CoolAlertType.loading,
-              // title: 'تم',
-              // textTextStyle: normalTextStyle(fontSize: 20),
-              // text: "تم تثبيت النشاط",
-              // autoCloseDuration: const Duration(seconds: 2),
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return Center(child: CircularProgressIndicator());
+              },
             );
 
             }
 
           if (state is EditActivitySuccessState ) {
-            CoolAlert.show(
-              width: displayWidth(context) / 4,
+            Navigator.pop(context); // Close loading dialog
+            showDialog(
               context: context,
-              type: CoolAlertType.success,
-              title: 'تم',
-              textTextStyle: normalTextStyle(fontSize: 20),
-              text: "تم تعديل النشاط",
-              autoCloseDuration: const Duration(seconds: 2),
-            ).then((value) {
-              Navigator.of(context).pushReplacement(MyAnimatedRoute(page: GetAnnouncedActivitiesScreen()));
-            });
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('تم', style: normalTextStyle(fontSize: 20)),
+                  content: Text("تم تعديل النشاط", style: normalTextStyle(fontSize: 16)),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.of(context).pushReplacement(MyAnimatedRoute(page: GetAnnouncedActivitiesScreen()));
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
 
           }
           if (state is SetEditValueState) {

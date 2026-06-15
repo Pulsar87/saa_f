@@ -75,4 +75,6 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
           );
-        })));\n  }\n}
+        })));  
+  }
+}

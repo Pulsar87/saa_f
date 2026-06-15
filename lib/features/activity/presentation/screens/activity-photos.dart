@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,27 +72,40 @@ import 'get_announced_activities_screen.dart';
             listener: (context, state) {
               if (state is ConfirmActivitySuccessState )
               {
-                CoolAlert.show(
-                  width: displayWidth(context) / 4,
+                showDialog(
                   context: context,
-                  type: CoolAlertType.success,
-                  title: 'تم',
-                  textTextStyle: normalTextStyle(fontSize: 20),
-                  text: "تم تثبيت النشاط",
-                  autoCloseDuration: const Duration(seconds: 2),
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('تم', style: normalTextStyle(fontSize: 20)),
+                      content: Text("تم تثبيت النشاط", style: normalTextStyle(fontSize: 16)),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
                 ).then((value) {
-                  Navigator.pop(context);});
+                  Navigator.pop(context);
+                });
 
               }
               else if (state is ConfirmActivityErrorState) {
-                CoolAlert.show(
-                  width: displayWidth(context) / 4,
+                showDialog(
                   context: context,
-                  type: CoolAlertType.error,
-                  title: '',
-                  textTextStyle: normalTextStyle(fontSize: 20),
-                  text: StringConst.somethingWrong,
-                  autoCloseDuration: const Duration(seconds: 2),
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('', style: normalTextStyle(fontSize: 20)),
+                      content: Text(StringConst.somethingWrong, style: normalTextStyle(fontSize: 16)),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
                 ).then((value) {
                   Navigator.pop(context);
                 });

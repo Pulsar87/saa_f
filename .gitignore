@@ -1,28 +1,30 @@
 ```
 # Build artifacts
 /build/
-/pubspec.lock
+/bin/
+/ios/Flutter/flutter_assets/
+
+# Distribution
+/dist/
+
+# Temporary files
+*.tmp
+*.temp
 
 # Environment
-/.env
-/.env.local
+.env
+.env.local
 *.env.*
 
-# Logs
-*.log
-
-# Dependencies
-/.dart_tool/
-/packages/
-
 # IDE files
-/.vscode/
-/.idea/
+.vscode/
+.idea/
 *.swp
 *.swo
-*.tmp
 
-# OS files
-.DS_Store
-Thumbs.db
+# Dependencies
+vendor/
+node_modules/
+.pub-cache/
+.dart_tool/
 ```
