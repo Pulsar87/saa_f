@@ -1,0 +1,95 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:saa_f/features/activity/domain/bloc/activity_event.dart';
+
+import '../../../../core/components/screen_componant/loading_screen.dart';
+import '../../../../core/constant/strings-const.dart';
+import '../../../../core/router/animation_route.dart';
+import '../../../../core/themes/text_style.dart';
+import '../../../_drawer/presntiaion/widgets/drawer/my_drawer.dart';
+import '../../data/repository/activity_repo.dart';
+import '../../domain/bloc/activity_bloc.dart';
+import '../../domain/bloc/activity_state.dart';
+import '../method/add_success_method.dart';
+import '../widgets/get_announced_activities/get_announced_activities_list_item.dart';
+import 'activity-photos.dart';
+
+class GetAnnouncedActivitiesScreen extends StatelessWidget {
+  GetAnnouncedActivitiesScreen({super.key});
+  final ActivityBloc activityBloc = ActivityBloc(activityRepository: ActivityRepo());
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (BuildContext context) => activityBloc,
+        child: BlocListener<ActivityBloc, ActivityState>(listener: (context, state) {
+          // if (state is ActivityAddSuccessState){
+          //
+          //   activitySuccessMetohd(context,"تم إضافة النشاط بنجاح");
+          // }
+          if (state is GetAnnouncedActivitiesErrorState) {
+            activityErrorMethod(context,StringConst.somethingWrong,);
+          }
+          // else if(state is AuthErrorState) {authErrorCoolAlert(context); }
+        }, child: BlocBuilder<ActivityBloc, ActivityState>(builder: (context, state) {
+          if (state is ActivityInitialState) {
+            print("object");
+            context.read<ActivityBloc>().add(GetAnnouncedActivitiesEvent());
+          }
+
+          if (state is GetAnnouncedActivitiesLoadingState) {
+            return MyLoadingScreen();
+          } else if (state is GetAnnouncedActivitiesSuccessState){
+            return Scaffold(
+              // drawer: MyDrawer(),
+
+              appBar: AppBar(
+                title: Text("الأنشطة المعلنة"),
+              ),
+              body: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.separated(
+                      itemBuilder: (context,index) =>
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                  MyAnimatedRoute(
+                                  page: ActivityPhotoScreen(
+                                    imgUrl: state.activityListModel.data![index]['img_url'],
+                                    id: state.activityListModel.data![index]['id'],
+                                    name:state.activityListModel.data![index]['activity_name'],
+                                    age: state.activityListModel.data![index]['age'],
+                                    time: state.activityListModel.data![index]['activity_date'],
+                                    activityDate: state.activityListModel.data![index]['activity_date'],
+                                    description: state.activityListModel.data![index]['description'],
+                                    activityTime: '',
+                                  )))
+                                  .then((value) =>
+                                  {
+                                    context.read<ActivityBloc>().add(GetAnnouncedActivitiesEvent())
+
+                              }
+                              );
+                            },
+
+                            child: GetAnnouncedActivitiesListItem(
+                              img: state.activityListModel.data![index]['img_url'],
+                              title: state.activityListModel.data![index]['activity_name'],
+                              date: state.activityListModel.data![index]['activity_date'],
+                              age: state.activityListModel.data![index]['age'],
+                              description: state.activityListModel.data![index]['description'],
+                              id: state.activityListModel.data![index]['id'],
+                            ),
+                          ),
+                      separatorBuilder: (context,index) => SizedBox(height: 10,),
+                      itemCount: state.activityListModel.data!.length)
+              ),
+            );
+          }else {
+            return Scaffold(body:  Center(child: Text("عذراً، حصل خطأ ما",style: normalTextStyle(),),),);
+          }
+        })));
+
+  }
+}
