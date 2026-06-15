@@ -87,20 +87,20 @@ final ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.normal,
     ),
   ),
-  tabBarTheme : TabBarTheme(
+  tabBarTheme: const TabBarThemeData(
     labelColor: primaryColor,
-    labelStyle: const TextStyle(
+    labelStyle: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 25,
     ),
 
     unselectedLabelColor: Colors.grey,
-    unselectedLabelStyle: const TextStyle(
+    unselectedLabelStyle: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 20,
     ),
 
-    overlayColor: MaterialStateProperty.all<Color>(Colors.grey), // لون الـ overlay
+    overlayColor: MaterialStatePropertyAll<Color>(Colors.grey), // لون الـ overlay
 
   ),
 

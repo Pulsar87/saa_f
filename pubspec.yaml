@@ -47,7 +47,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_custom_clippers: ^2.1.0
   youtube_player_flutter: ^9.0.0
-  font_awesome_flutter: ^10.7.0
+  font_awesome_flutter: ^9.0.0
   flashy_tab_bar2: ^0.0.9
   circular_bottom_navigation:  ^2.3.0
   im_stepper: ^1.0.1+1
